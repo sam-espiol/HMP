@@ -315,82 +315,91 @@ body::before {
   – Hiển thị đủ 7 ảnh, không chồng nội dung
   – Thu nhỏ, dời ảnh sao cho phù hợp
 ———————————————————————————*/
+/*———————————————————————————
+  9. Responsive cho Mobile (≤480px)
+  – Hiển thị đủ 7 ảnh, không chồng nội dung
+  – Di chuyển/thu nhỏ ảnh, đưa Guestbook lên cao
+———————————————————————————*/
 @media (max-width: 480px) {
-  /* 1. Thu nhỏ .wrapper, chừa lề hai bên để ảnh ‘nhô’ ra */
+  /* 1. Wrapper: chiếm 100% chiều ngang (100vw),
+        không để max-width, đẩy Guestbook lên trên */
   .wrapper {
-    max-width: none;      /* Bỏ giới hạn 800px */
-    width: 90vw;          /* Chừa 5vw hai bên cho ảnh */
-    margin: 0 auto;
-    padding: 1rem 0.5rem;  /* Giảm padding để nội dung gọn hơn */
+    width: 100vw;        /* Khung ngang tràn sát mép màn */
+    padding: 1rem 0.5rem; /* Giảm padding hai bên */
+    margin: 0;
   }
 
-  /* 2. Thu nhỏ toàn bộ ảnh .photo-item */
+  /* 2. Đẩy Guestbook sát trên (đỡ phải cuộn xuống quá nhiều) */
+  .guestbook {
+    margin-top: 1rem;   /* Chỉ cách header 1rem, thay vì 10rem trước */
+    padding: 1rem 0.8rem;
+    max-width: 100%;
+  }
+
+  /* 3. Photo-item: thu nhỏ và điều chỉnh vị trí cho mobile */
   .photo-item {
     width: clamp(50px, 18vw, 80px);
   }
-
-  /* 3. Điều chỉnh vị trí 7 ảnh cho mobile 
-       (đảm bảo 100vw không tràn, nhưng ảnh vẫn nhô ra) */
   .photo-item.pos1 {
-    top: 13%;
+    top: 5%;    /* Đẩy xuống thấp chút để không chồng header */
     left: 3%;
     transform: rotate(-10deg);
   }
   .photo-item.pos2 {
-    top: 13%;
-    left: 90%;
+    top: 5%;
+    left: 50%;
     transform: translateX(-50%) rotate(12deg);
   }
   .photo-item.pos3 {
-    top: 13%;
-    left: 40%;
+    top: 5%;
+    right: 3%;
     transform: rotate(8deg);
   }
-  .photo-item.pos4 {
-    display: none;
-  }
+  .photo-item.pos4,
   .photo-item.pos5 {
     display: none;
   }
   .photo-item.pos6 {
-    top: 70%;
+    bottom: 5%; /* Giữ sát đáy màn */
     left: 10%;
-    transform: rotate(-15deg);
+    transform: rotate(15deg);
   }
   .photo-item.pos7 {
-    top: 70%;
+    bottom: 5%;
     right: 10%;
     transform: rotate(5deg);
   }
 
-  /* 4. Khung guestbook: giữ nguyên cơ chế scroll khi cần, nhưng giảm margin để vừa khung */
-  .guestbook {
-    margin-top: 10rem;
-    padding: 1rem 0.8rem;
-    max-width: 100%;
-  }
+  /* 4. Giữ .entries scroll nội bộ, nhưng giảm chiều cao khung */
   .entries {
-    max-height: 200px;  /* Giảm chiều cao để vừa khung mobile */
+    max-height: 180px; /* Giảm chiều cao để vừa khung di động */
   }
 
-  /* 5. Điều chỉnh kích thước chữ trong entry cho dễ đọc trên mobile */
+  /* 5. Điều chỉnh font-size cho dễ đọc */
   .entry .author {
-    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    font-size: clamp(0.85rem, 2.5vw, 0.9rem);
   }
   .entry .message {
-    font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
   }
 
   /* 6. Icon trái tim: thu nhỏ */
-  .heart-icon {
+  .heart-icon-right,
+  .heart-icon-left {
     top: 8px;
-    right: 8px;
     width: 30px;
     height: 30px;
   }
+  .heart-icon-right {
+    right: 8px;
+  }
+  .heart-icon-left {
+    left: 8px;
+  }
 
-  /* 7. Photo-collage (nếu có) cũng cần allow overflow-visible */
+  /* 7. Cho phép ảnh ở .photo-collage rơi ra ngoài, không cắt */
   .photo-collage {
     overflow: visible;
   }
 }
+
