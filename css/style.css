@@ -1,0 +1,396 @@
+/*———————————————————————————
+  1. Reset cơ bản và biến toàn cục
+———————————————————————————*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Màu chủ đạo */
+  --bg-start:   #ffe0f0;
+  --bg-end:     #fff5f0;
+  --primary:    #ff6fa4;
+  --accent:     #ffb6c1;
+  --text:       #333333;
+  --shadow:     rgba(0, 0, 0, 0.1);
+  --entry-bg:   rgba(255, 248, 250, 0.9);
+}
+
+/*———————————————————————————
+  2. Body & Nền động
+———————————————————————————*/
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  font-family:
+    'Comic Sans MS', 'Comic Sans',
+    'Segoe UI', 'Tahoma', 'Geneva', 'Helvetica', 'Arial',
+    sans-serif;
+  background: linear-gradient(120deg, var(--bg-start), var(--bg-end));
+  color: var(--text);
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: url('../assets/clouds.png') repeat;
+  opacity: 0.08;
+  animation: moveClouds 60s linear infinite;
+}
+
+@keyframes moveClouds {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-25%); }
+}
+
+/*———————————————————————————
+  3. Wrapper & Header
+———————————————————————————*/
+.wrapper {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  z-index: 2;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.header h1 {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  color: var(--primary);
+  text-shadow: 2px 2px 4px var(--shadow);
+  animation: shine 2s ease-in-out infinite alternate;
+}
+
+@keyframes shine {
+  from { text-shadow: 2px 2px 4px rgba(255,111,164,0.5); }
+  to   { text-shadow: 2px 2px 8px rgba(255,111,164,1); }
+}
+
+.subtitle {
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
+  color: #a6336c;
+  margin-top: 0.3rem;
+  font-style: italic;
+  animation: fadeInSubtitle 1.5s ease-out both;
+}
+
+@keyframes fadeInSubtitle {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/*———————————————————————————
+  4. Photo Collage (7 ảnh xung quanh)
+———————————————————————————*/
+.photo-collage {
+  position: relative;
+  width: 100%;
+  height: clamp(280px, 45vw, 380px);
+  margin-bottom: 1rem;
+}
+
+.photo-item {
+  position: absolute;
+  width: clamp(80px, 20vw, 140px);
+  height: auto;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform-origin: center center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 7 vị trí và góc xoay giữ nguyên trên mọi thiết bị */
+.photo-item.pos1 { top: 5%;  left: 5%;  transform: rotate(-10deg); }
+.photo-item.pos2 { top: 5%;  left: 85%; transform: rotate(12deg); }
+.photo-item.pos3 { top: 35%; left: 10%; transform: rotate(8deg); }
+.photo-item.pos4 { top: 70%; left: 50%; transform: translateX(-50%) rotate(-5deg); }
+.photo-item.pos5 { top: 35%; left: 80%; transform: rotate(-15deg); }
+.photo-item.pos6 { top: 65%; left: 10%; transform: rotate(15deg); }
+.photo-item.pos7 { top: 70%; left: 80%; transform: rotate(5deg); }
+
+.photo-item:hover {
+  transform: scale(1.1) rotate(0deg);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.photo-item img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/*———————————————————————————
+  5. Khung Guestbook (lưu bút)
+———————————————————————————*/
+.guestbook {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  padding: 1.8rem 1.2rem;
+  box-shadow: 0 6px 16px var(--shadow);
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.guestbook::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 16px;
+  width: calc(100% - 32px);
+  height: 100%;
+  border: 3px dashed var(--accent);
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+.note {
+  font-size: clamp(0.9rem, 3vw, 1rem);
+  color: #555;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/*———————————————————————————
+  6. Mỗi mục lưu bút (entry)
+———————————————————————————*/
+.entries {
+  max-height: 300px;
+  overflow-y: auto;  /* Để scroll khi cần */
+  padding-right: 8px; 
+}
+
+.entries::-webkit-scrollbar {
+  width: 6px;
+}
+.entries::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
+.entries::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.entry {
+  background: var(--entry-bg);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.entry .author {
+  font-weight: bold;
+  color: #c1275b;
+  margin-bottom: 0.3rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+}
+
+.entry .message {
+  font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  line-height: 1.5;
+  color: #333;
+}
+
+/*———————————————————————————
+  7. Icon trái tim cố định
+———————————————————————————*/
+.heart-icon-right {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  background: url('../assets/heart.png') no-repeat center/contain;
+  animation: beat 1s ease-in-out infinite;
+  z-index: 3;
+}
+.heart-icon-left {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 36px;
+  height: 36px;
+  background: url('../assets/heart.png') no-repeat center/contain;
+  animation: beat 1s ease-in-out infinite;
+  z-index: 3;
+}
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/*———————————————————————————
+  8. Hiệu ứng rơi (fall): hoa + trái tim rơi xuống
+———————————————————————————*/
+.floating-items {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-items .item {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  opacity: 0.85;
+  animation: fallDown linear infinite;
+}
+
+.floating-items .item.heart {
+  background: url('../assets/heart.png') no-repeat center/contain;
+}
+
+.floating-items .item.petal {
+  background: url('../assets/petal.png') no-repeat center/contain;
+  width: 18px;
+  height: 18px;
+}
+
+@keyframes fallDown {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(120vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/*———————————————————————————
+  9. Đa số đã xóa media query cho ≤480px, 
+     nên mobile sẽ hiển thị như desktop
+———————————————————————————*/
+/* (Phần @media (max-width: 480px) đã được xóa hoàn toàn) */
+
+/*———————————————————————————
+  10. Nút (nếu cần)
+———————————————————————————*/
+.btn {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 0.5rem 1.2rem;
+  border-radius: 24px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  box-shadow: 0 4px 8px var(--shadow);
+  margin-top: 1rem;
+}
+
+.btn:hover {
+  background: #ff88b3;
+}
+/*———————————————————————————
+  9. Responsive cho Mobile (≤480px)
+  – Hiển thị đủ 7 ảnh, không chồng nội dung
+  – Thu nhỏ, dời ảnh sao cho phù hợp
+———————————————————————————*/
+@media (max-width: 480px) {
+  /* 1. Thu nhỏ .wrapper, chừa lề hai bên để ảnh ‘nhô’ ra */
+  .wrapper {
+    max-width: none;      /* Bỏ giới hạn 800px */
+    width: 90vw;          /* Chừa 5vw hai bên cho ảnh */
+    margin: 0 auto;
+    padding: 1rem 0.5rem;  /* Giảm padding để nội dung gọn hơn */
+  }
+
+  /* 2. Thu nhỏ toàn bộ ảnh .photo-item */
+  .photo-item {
+    width: clamp(50px, 18vw, 80px);
+  }
+
+  /* 3. Điều chỉnh vị trí 7 ảnh cho mobile 
+       (đảm bảo 100vw không tràn, nhưng ảnh vẫn nhô ra) */
+  .photo-item.pos1 {
+    top: 13%;
+    left: 3%;
+    transform: rotate(-10deg);
+  }
+  .photo-item.pos2 {
+    top: 13%;
+    left: 90%;
+    transform: translateX(-50%) rotate(12deg);
+  }
+  .photo-item.pos3 {
+    top: 13%;
+    left: 40%;
+    transform: rotate(8deg);
+  }
+  .photo-item.pos4 {
+    display: none;
+  }
+  .photo-item.pos5 {
+    display: none;
+  }
+  .photo-item.pos6 {
+    top: 70%;
+    left: 10%;
+    transform: rotate(-15deg);
+  }
+  .photo-item.pos7 {
+    top: 70%;
+    right: 10%;
+    transform: rotate(5deg);
+  }
+
+  /* 4. Khung guestbook: giữ nguyên cơ chế scroll khi cần, nhưng giảm margin để vừa khung */
+  .guestbook {
+    margin-top: 10rem;
+    padding: 1rem 0.8rem;
+    max-width: 100%;
+  }
+  .entries {
+    max-height: 200px;  /* Giảm chiều cao để vừa khung mobile */
+  }
+
+  /* 5. Điều chỉnh kích thước chữ trong entry cho dễ đọc trên mobile */
+  .entry .author {
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  }
+  .entry .message {
+    font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+  }
+
+  /* 6. Icon trái tim: thu nhỏ */
+  .heart-icon {
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+  }
+
+  /* 7. Photo-collage (nếu có) cũng cần allow overflow-visible */
+  .photo-collage {
+    overflow: visible;
+  }
+}
