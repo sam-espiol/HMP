@@ -356,12 +356,12 @@ body::before {
     display: none;
   }
   .photo-item.pos6 {
-    top: 90%;
+    top: 80%;
     left: 10%;
     transform: rotate(-15deg);
   }
   .photo-item.pos7 {
-    top: 90%;
+    top: 80%;
     right: 10%;
     transform: rotate(5deg);
   }
