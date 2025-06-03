@@ -335,17 +335,17 @@ body::before {
   /* 3. Điều chỉnh vị trí 7 ảnh cho mobile 
        (đảm bảo 100vw không tràn, nhưng ảnh vẫn nhô ra) */
   .photo-item.pos1 {
-    top: 13%;
+    top: 15%;
     left: 3%;
     transform: rotate(-10deg);
   }
   .photo-item.pos2 {
-    top: 13%;
+    top: 15%;
     left: 90%;
     transform: translateX(-50%) rotate(12deg);
   }
   .photo-item.pos3 {
-    top: 13%;
+    top: 15%;
     left: 40%;
     transform: rotate(8deg);
   }
@@ -356,12 +356,12 @@ body::before {
     display: none;
   }
   .photo-item.pos6 {
-    top: 70%;
+    top: 80%;
     left: 10%;
     transform: rotate(-15deg);
   }
   .photo-item.pos7 {
-    top: 70%;
+    top: 80%;
     right: 10%;
     transform: rotate(5deg);
   }
